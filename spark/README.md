@@ -69,9 +69,18 @@ Khởi chạy:
 ./sbin/start-history-server.sh
 ```
 
+![image](https://user-images.githubusercontent.com/81508954/201504631-c1cd2ca3-4c52-4a59-89a0-53062bd2fbf8.png)
+
+
 # 5. Run job on Yarn
 Chạy 1 job example như sau:
 ```
 ./bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster examples/jars/spark-examples*.jar 10
 ```
+Trên Yarn sẽ xuất hiện 1 job: 
+![image](https://user-images.githubusercontent.com/81508954/201504593-455a10ff-cc97-4f2c-b8dc-d4a650baf537.png)
+
+UI job:
+![image](https://user-images.githubusercontent.com/81508954/201504637-0e4d00ff-d719-4c0c-b598-b17701203021.png)
+
 
