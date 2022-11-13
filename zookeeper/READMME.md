@@ -47,6 +47,9 @@ server.2=m2:2888:3888
 Đến thư mục `dataDir` đã tạo trước đó, tạo file `myid`. Và gán `id` cho máy đó
 Ví dụ: m1 gán `myid = 1`, m2 gán `myid = 2`
 
+![image](https://user-images.githubusercontent.com/81508954/201512109-aaa0c8d3-2d99-4812-b309-1fa482e59a45.png)
+
+
 # 3. Khởi chạy
 # 3.1. Service
 ```
