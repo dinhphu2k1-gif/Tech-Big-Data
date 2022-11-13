@@ -136,3 +136,5 @@ WantedBy=default.target
 
 # 4. Kiểm tra
 Vào trình duyệt ```m1:9200``` để check elasticsearch đã chạy hay chưa
+
+![image](https://user-images.githubusercontent.com/81508954/201514813-1cfa2863-f4b3-447e-9a76-e268f0c3267d.png)
