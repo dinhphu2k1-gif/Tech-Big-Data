@@ -163,9 +163,64 @@ Sửa thuộc tính `yarn.scheduler.capacity.maximum-am-resource-percent` từ `
 ## 4.9. Chỉnh sửa file workers
 Để xác định `datanote` chạy trên máy nào:
 
+![image](https://user-images.githubusercontent.com/81508954/201503649-e68c0c34-a6bb-4a1a-8fb1-5cc898a24ea7.png)
 
 ## 4.10. Format Namenode
 Cần định dạng lại namenode trước khi khởi chạy:
 ```
 hdfs namenode -format
 ```
+
+**Lưu ý**: đối với máy 2 cũng làm tương tự, có thể dùng lệnh scp để copy folder cho nhanh
+
+# 5. Khởi chạy
+Vào thư mục sbin:
+```
+./start-all.sh
+```
+Sau khi khởi chạy, dùng lệnh `jps` để kiểm tra:
+
+![image](https://user-images.githubusercontent.com/81508954/201503777-7b6509ce-bfa7-4167-a362-a36f1454e82b.png)
+
+Có thể viết file serivce để tự động viêc khởi chạy hadoop khi bật máy ảo:
+- Vào folder `/etc/systemd/system` và tạo file `hadoop.service`:
+
+```
+sudo nano hadoop.service
+```
+- Dán vào file như sau:
+```
+[Unit]
+Description=Run service as user phukaioh
+DefaultDependencies=no
+
+[Service]
+Type=simple
+User=phukaioh
+Group=phukaioh
+ExecStart=/opt/hadoop/sbin/start-all.sh
+ExecStop=/opt/hadoop/sbin/stop-all.sh
+TimeoutStartSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+```
+- Reload deamon service:
+```
+sudo systemctl daemon-reload
+```
+
+- Service tự khỏi chạy mỗi khi bật máy
+```
+sudo systemctl enable example.service
+```
+
+Đọc thêm bài sau để hiểu rõ: https://www.shubhamdipt.com/blog/how-to-create-a-systemd-service-in-linux/
+# 6. Truy cập UI
+Namenode:
+![image](https://user-images.githubusercontent.com/81508954/201503989-a93dea06-5cba-4519-861e-91ed23de0625.png)
+
+Yarn: 
+![image](https://user-images.githubusercontent.com/81508954/201503999-d32c476a-5ce4-4cc6-a002-934ad571c9e9.png)
+![image](https://user-images.githubusercontent.com/81508954/201504015-1d96ba41-28ab-415f-b4c2-7f0de1a14cc8.png)
