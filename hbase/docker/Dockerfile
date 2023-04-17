@@ -3,12 +3,12 @@ FROM ubuntu:20.04
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet
 
 RUN wget https://dlcdn.apache.org/hbase/2.4.16/hbase-2.4.16-bin.tar.gz && \
-tar -xzvf hbase-2.4.16-bin.tar.gz && \
-mv hbase-2.4.16 /usr/local/hbase && \
-rm hbase-2.4.16-bin.tar.gz
+    tar -xzvf hbase-2.4.16-bin.tar.gz && \
+    mv hbase-2.4.16 /usr/local/hbase && \
+    rm hbase-2.4.16-bin.tar.gz
 
 # set environment variable
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 

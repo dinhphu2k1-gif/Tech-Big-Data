@@ -3,9 +3,9 @@ FROM ubuntu:20.04
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet
 
-# install hadoop 2.7.2
+# install hadoop 4.2.3
 RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz && \
     tar -xzvf hadoop-3.2.4.tar.gz && \
     mv hadoop-3.2.4 /usr/local/hadoop && \
@@ -24,8 +24,10 @@ RUN mkdir -p ~/hdfs/namenode && \
     mkdir -p ~/hdfs/datanode && \
     mkdir $HADOOP_HOME/logs
 
+# copy config vào thư mục tmp của container
 COPY config/* /tmp/
 
+# chuyển file config
 RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh && \
     mv /tmp/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml && \ 
@@ -36,6 +38,7 @@ RUN mv /tmp/ssh_config ~/.ssh/config && \
     mv /tmp/start-hadoop.sh ~/start-hadoop.sh && \
     mv /tmp/run-wordcount.sh ~/run-wordcount.sh
 
+# cấp quyenf chạy cho các file sh
 RUN chmod +x ~/start-hadoop.sh && \
     chmod +x ~/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
@@ -44,5 +47,6 @@ RUN chmod +x ~/start-hadoop.sh && \
 # format namenode
 RUN /usr/local/hadoop/bin/hdfs namenode -format
 
+# chạy service ssh
 CMD [ "sh", "-c", "service ssh start; bash"]
 
