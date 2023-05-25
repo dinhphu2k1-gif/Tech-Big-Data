@@ -11,6 +11,7 @@ RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz
     mv hadoop-3.2.4 /usr/local/hadoop && \
     rm hadoop-3.2.4.tar.gz 
 
+# install spark
 RUN wget https://dlcdn.apache.org/spark/spark-3.4.0/spark-3.4.0-bin-hadoop3.tgz && \
     tar -xzvf spark-3.4.0-bin-hadoop3.tgz && \
     mv spark-3.4.0-bin-hadoop3 /usr/local/spark && \
@@ -32,12 +33,12 @@ RUN mkdir -p ~/hdfs/namenode && \
     mkdir $HADOOP_HOME/logs
 
 # copy config vào thư mục tmp của container
-COPY config-hadoop/* /tmp/config-hadoop
-COPY config-spark/* /tmp/config-spark
+COPY config-hadoop/* /tmp/config-hadoop/
+COPY config-spark/* /tmp/config-spark/
 
 # chuyển file config
 RUN mv /tmp/config-hadoop/ssh_config ~/.ssh/config && \
-    mv /tmp/config-hadoop/hadoop-env.sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh && \
+    mv /tmp/config-hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     mv /tmp/config-hadoop/hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml && \ 
     mv /tmp/config-hadoop/core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml && \
     mv /tmp/config-hadoop/mapred-site.xml $HADOOP_HOME/etc/hadoop/mapred-site.xml && \
