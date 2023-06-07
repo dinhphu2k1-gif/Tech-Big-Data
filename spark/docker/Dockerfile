@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet maven git
 
 # install hadoop 4.2.3
 RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz && \
