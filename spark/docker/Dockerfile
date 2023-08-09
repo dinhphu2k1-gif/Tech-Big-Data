@@ -3,26 +3,26 @@ FROM ubuntu:20.04
 WORKDIR /root
 
 # install openssh-server, openjdk and wget
-RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet maven git
+RUN apt-get update && apt-get install -y openssh-server openjdk-8-jdk wget iputils-ping net-tools telnet maven
 
 # install hadoop 4.2.3
 RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.2.4/hadoop-3.2.4.tar.gz && \
     tar -xzvf hadoop-3.2.4.tar.gz && \
-    mv hadoop-3.2.4 /usr/local/hadoop && \
+    mv hadoop-3.2.4 /opt/hadoop && \
     rm hadoop-3.2.4.tar.gz 
 
 # install spark
 RUN wget https://dlcdn.apache.org/spark/spark-3.4.0/spark-3.4.0-bin-hadoop3.tgz && \
     tar -xzvf spark-3.4.0-bin-hadoop3.tgz && \
-    mv spark-3.4.0-bin-hadoop3 /usr/local/spark && \
+    mv spark-3.4.0-bin-hadoop3 /opt/spark && \
     rm spark-3.4.0-bin-hadoop3.tgz
 
 
 # set environment variable
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 
-ENV HADOOP_HOME=/usr/local/hadoop 
-ENV SPARK_HOME=/usr/local/spark
-ENV PATH=$PATH:/usr/local/hadoop/bin:/usr/local/hadoop/sbin 
+ENV HADOOP_HOME=/opt/hadoop 
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$HADOOP_HOME/bin:$SPARK_HOME/bin
 
 # ssh without key
 RUN ssh-keygen -t rsa -f ~/.ssh/id_rsa -P '' && \
@@ -56,7 +56,7 @@ RUN chmod +x ~/start-hadoop.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh 
 
 # format namenode
-RUN /usr/local/hadoop/bin/hdfs namenode -format
+RUN $HADOOP_HOME/bin/hdfs namenode -format
 
 # chạy service ssh
 CMD [ "sh", "-c", "service ssh start; bash"]
